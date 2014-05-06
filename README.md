@@ -18,6 +18,6 @@ In the meantime; clone it, build it, use something like ```lein localrepo``` to 
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Rory Gibson
 
 Distributed under the Eclipse Public License version 1.0.
