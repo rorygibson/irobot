@@ -24,9 +24,9 @@ WS : ( ' '
   ) -> channel(HIDDEN) ;
 
 
-records : record* ;
+records : Comment* record* Comment* ;
 
-record : agentline ruleline*;
+record : Comment* agentline Comment* ruleline*;
 
 agentline : 'User-Agent:' Agent Comment*;
 

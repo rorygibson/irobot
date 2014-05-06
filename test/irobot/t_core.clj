@@ -40,6 +40,42 @@ Allow:*") =>
       [:records
        [:record
         [:agentline "User-Agent:" "thingy" "# some comment"]
+        [:ruleline [:allowexpr "Allow" ":" "*"]]]])
+
+
+(fact "comments are allowed before the records"
+      (robots
+"# first line
+# second comment line
+User-Agent: thingy
+Allow:*") =>
+      [:records
+       "# first line" "# second comment line"
+       [:record
+        [:agentline "User-Agent:" "thingy"]
+        [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
+
+
+(fact "comments are allowed after the records (but they'll get gobbled greedily)"
+      (robots
+"User-Agent: thingy
+Allow: *
+# first line
+# second comment line") =>
+      [:records
+       [:record
+        [:agentline "User-Agent:" "thingy"]
+        [:ruleline [:allowexpr "Allow" ":" "*" "# first line" "# second comment line"]]]]) 
+
+
+(fact "comments are allowed within the records (but they'll get gobbled greedily)"
+      (robots
+"User-Agent: thingy
+# first line
+Allow: *") =>
+      [:records
+       [:record
+        [:agentline "User-Agent:" "thingy" "# first line"]
         [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
 
 
