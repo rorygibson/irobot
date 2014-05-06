@@ -7,24 +7,34 @@
 
 grammar robots;
 
-records : record* ;
+Comment
+  :  '#' ~( '\r' | '\n' )*
+  ;
 
-record : agentline WS* ruleline* WS*;
+Agent : ([a-z] | [A-Z])+ ;
 
-agentline : 'User-Agent:' AGENT WS* ;
+Path : ('*' | '/')+ ;
 
-AGENT : ([a-z] | [A-Z])+ ;
-
-ruleline : (allowexpr | disallowexpr) WS* ;
-
-disallowexpr : 'Disallow' ':' PATH WS*;
-
-allowexpr : 'Allow' ':' PATH WS*;
-
-PATH : ('*' | '/')+ ;
+Hash : '#';
 
 WS : ( ' '
   | '\t'
   | '\n'
   | '\r'
   ) -> channel(HIDDEN) ;
+
+
+records : record* ;
+
+record : agentline ruleline*;
+
+agentline : 'User-Agent:' Agent Comment*;
+
+ruleline : (allowexpr | disallowexpr) Comment* ;
+
+disallowexpr : 'Disallow' ':' Path Comment*;
+
+allowexpr : 'Allow' ':' Path Comment*;
+
+
+

@@ -12,7 +12,7 @@
        [:record
         [:agentline "User-Agent:" "thingy"]]])
 
-
+ 
 (fact "a path of / works"
       (robots
 "User-Agent:thingy
@@ -30,6 +30,16 @@ Allow:*") =>
       [:records
        [:record
         [:agentline "User-Agent:" "thingy"]
+        [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
+
+
+(fact "end-of-line comments are allowed"
+       (robots
+"User-Agent: thingy # some comment
+Allow:*") =>
+      [:records
+       [:record
+        [:agentline "User-Agent:" "thingy" "# some comment"]
         [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
 
 
