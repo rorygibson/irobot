@@ -1,0 +1,30 @@
+    robotstxt    = *blankcomment
+                 | *blankcomment record *( 1*commentblank 1*record )
+                   *blankcomment
+    blankcomment = 1*(blank | commentline)
+    commentblank = *commentline blank *(blankcomment)
+    blank        = *space CRLF
+    CRLF         = CR LF
+    record       = *commentline agentline *(commentline | agentline)
+                   1*ruleline *(commentline | ruleline)
+
+    agentline    = "User-agent:" *space agent  [comment] CRLF
+    ruleline     = (disallowline | allowline | extension)
+    disallowline = "Disallow" ":" *space path [comment] CRLF
+    allowline    = "Allow" ":" *space rpath [comment] CRLF
+    extension    = token : *space value [comment] CRLF
+    value        = <any CHAR except CR or LF or "#">
+
+    commentline  = comment CRLF
+    comment      = *blank "#" anychar
+    space        = 1*(SP | HT)
+    rpath        = "/" path
+    agent        = token
+    anychar      = <any CHAR except CR or LF>
+    CHAR         = <any US-ASCII character (octets 0 - 127)>
+    CTL          = <any US-ASCII control character
+                        (octets 0 - 31) and DEL (127)>
+    CR           = <US-ASCII CR, carriage return (13)>
+    LF           = <US-ASCII LF, linefeed (10)>
+    SP           = <US-ASCII SP, space (32)>
+    HT           = <US-ASCII HT, horizontal-tab (9)>
