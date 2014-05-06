@@ -1,10 +1,3 @@
-// grammar test;
-// rule  : 'hello' ID ;
-// ID : ([a-z] | [A-Z])+;
-// WS : [ \t\r\n]+ -> skip ;
-
-
-
 grammar robots;
 
 Comment
@@ -23,20 +16,19 @@ WS : ( ' '
   | '\r'
   ) -> channel(HIDDEN) ;
 
-
 records : Comment* record* Comment* ;
 
-record : Comment* agentline Comment* ruleline*;
+record : Comment* agent Comment* rule*;
 
-agentline : 'User-Agent:' Identifier Comment*;
+agent : 'User-Agent:' Identifier Comment*;
 
-ruleline : (allowexpr | disallowexpr | extline) Comment* ;
+rule : (allow | disallow | extension) Comment* ;
 
-disallowexpr : 'Disallow' ':' Path Comment*;
+disallow : 'Disallow' ':' Path Comment*;
 
-allowexpr : 'Allow' ':' Path Comment*;
+allow : 'Allow' ':' Path Comment*;
 
-extline : Identifier ':' Identifier Comment*;
+extension : Identifier ':' Identifier Comment*;
 
 
 

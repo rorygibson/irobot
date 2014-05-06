@@ -10,7 +10,7 @@
       (r "User-Agent:thingy\n") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]]])
+        [:agent "User-Agent:" "thingy"]]])
 
  
 (fact "a path of / works"
@@ -19,8 +19,8 @@
 Allow:/") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:allowexpr "Allow" ":" "/"]]]]) 
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:allow "Allow" ":" "/"]]]]) 
 
 
 (fact "robots with one record, one allow"
@@ -29,8 +29,8 @@ Allow:/") =>
 Allow:*") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:allow "Allow" ":" "*"]]]]) 
 
 
 (fact "end-of-line comments are allowed"
@@ -39,8 +39,8 @@ Allow:*") =>
 Allow:*") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy" "# some comment"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]])
+        [:agent "User-Agent:" "thingy" "# some comment"]
+        [:rule [:allow "Allow" ":" "*"]]]])
 
 
 (fact "comments are allowed before the records"
@@ -52,8 +52,8 @@ Allow:*") =>
       [:records
        "# first line" "# second comment line"
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:allow "Allow" ":" "*"]]]]) 
 
 
 (fact "comments are allowed after the records (but they'll get gobbled greedily)"
@@ -64,8 +64,8 @@ Allow: *
 # second comment line") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:allowexpr "Allow" ":" "*" "# first line" "# second comment line"]]]]) 
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:allow "Allow" ":" "*" "# first line" "# second comment line"]]]]) 
 
 
 (fact "comments are allowed within the records (but they'll get gobbled greedily)"
@@ -75,25 +75,25 @@ Allow: *
 Allow: *") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy" "# first line"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]]) 
+        [:agent "User-Agent:" "thingy" "# first line"]
+        [:rule [:allow "Allow" ":" "*"]]]]) 
 
 
 (fact "robots with one record, one disallow"
       (r "User-Agent:thingy\nDisallow:*") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:disallowexpr "Disallow" ":" "*"]]]])
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:disallow "Disallow" ":" "*"]]]])
 
 
 (fact "arbitrary extensions can be specified"
       (r "User-Agent:thingy\nDisallow:*\nSOMETHING: foobar") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "thingy"]
-        [:ruleline [:disallowexpr "Disallow" ":" "*"]]
-        [:ruleline [:extline "SOMETHING" ":" "foobar"]]]])
+        [:agent "User-Agent:" "thingy"]
+        [:rule [:disallow "Disallow" ":" "*"]]
+        [:rule [:extension "SOMETHING" ":" "foobar"]]]])
 
 
 (fact "can have more than one record"
@@ -104,11 +104,11 @@ User-Agent: bar
 Disallow: *") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "foo"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]] 
+        [:agent "User-Agent:" "foo"]
+        [:rule [:allow "Allow" ":" "*"]]] 
        [:record
-        [:agentline "User-Agent:" "bar"]
-        [:ruleline [:disallowexpr "Disallow" ":" "*"]] ]])
+        [:agent "User-Agent:" "bar"]
+        [:rule [:disallow "Disallow" ":" "*"]] ]])
 
 
 (fact "multiple records, with multiple allows & disallows"
@@ -120,10 +120,10 @@ Disallow: *
 Allow: *") =>
       [:records
        [:record
-        [:agentline "User-Agent:" "foo"]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]
+        [:agent "User-Agent:" "foo"]
+        [:rule [:allow "Allow" ":" "*"]]]
        [:record
-        [:agentline "User-Agent:" "bar"]
-        [:ruleline [:disallowexpr "Disallow" ":" "*"]]
-        [:ruleline [:allowexpr "Allow" ":" "*"]]]])
+        [:agent "User-Agent:" "bar"]
+        [:rule [:disallow "Disallow" ":" "*"]]
+        [:rule [:allow "Allow" ":" "*"]]]])
 
