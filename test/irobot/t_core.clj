@@ -87,6 +87,15 @@ Allow: *") =>
         [:ruleline [:disallowexpr "Disallow" ":" "*"]]]])
 
 
+(fact "arbitrary extensions can be specified"
+      (robots "User-Agent:thingy\nDisallow:*\nSOMETHING: foobar") =>
+      [:records
+       [:record
+        [:agentline "User-Agent:" "thingy"]
+        [:ruleline [:disallowexpr "Disallow" ":" "*"]]
+        [:ruleline [:extline "SOMETHING" ":" "foobar"]]]])
+
+
 (fact "can have more than one record"
       (robots
 "User-Agent: foo

@@ -11,7 +11,7 @@ Comment
   :  '#' ~( '\r' | '\n' )*
   ;
 
-Agent : ([a-z] | [A-Z])+ ;
+Identifier : ([a-z] | [A-Z])+ ;
 
 Path : ('*' | '/')+ ;
 
@@ -28,13 +28,15 @@ records : Comment* record* Comment* ;
 
 record : Comment* agentline Comment* ruleline*;
 
-agentline : 'User-Agent:' Agent Comment*;
+agentline : 'User-Agent:' Identifier Comment*;
 
-ruleline : (allowexpr | disallowexpr) Comment* ;
+ruleline : (allowexpr | disallowexpr | extline) Comment* ;
 
 disallowexpr : 'Disallow' ':' Path Comment*;
 
 allowexpr : 'Allow' ':' Path Comment*;
+
+extline : Identifier ':' Identifier Comment*;
 
 
 
