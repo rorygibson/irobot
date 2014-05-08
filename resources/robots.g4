@@ -6,6 +6,8 @@ Comment
 
 Identifier : ([a-z] | [A-Z])+ ;
 
+Glob: '*' ;
+
 Path : ('*' | '/')+ ;
 
 Hash : '#';
@@ -20,7 +22,7 @@ records : Comment* record* Comment* ;
 
 record : Comment* agent Comment* rule*;
 
-agent : 'User-Agent:' Identifier Comment*;
+agent : 'User-Agent:' (Identifier | Glob)  Comment*;
 
 rule : (allow | disallow | extension) Comment* ;
 

@@ -94,7 +94,7 @@ Allow: *") =>
         [:agent "User-Agent:" "thingy"]
         [:rule [:disallow "Disallow" ":" "*"]]
         [:rule [:extension "SOMETHING" ":" "foobar"]]]])
-
+ 
 
 (fact "can have more than one record"
       (r
