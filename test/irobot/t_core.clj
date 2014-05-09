@@ -22,6 +22,9 @@ Disallow: /")
 (def empty-robots (robots ""))
 (def blocks-all-robots (robots "User-Agent: *\nDisallow: /"))
 
+(facts "about loading robots.txt data"
+  (fact "can load from a string"
+    true = truthy))
 
 
 (fact "empty robots file allows crawling by any UA on any path"

@@ -1,6 +1,8 @@
 (ns irobot.core
   (:require [irobot.parse :refer [parse rules-for-ua]]
-            [irobot.paths :refer [matching-path]]))
+            [irobot.paths :refer [matching-path]]
+            [irobot.io :refer [string-from]])
+  (:import [java.io InputStream]))
 
 
 (defn allows?
@@ -22,6 +24,17 @@
       true)))
 
 
-(defn robots
-  [^String txt]
+(defmulti robots
+  "Load and parse a robots.txt. Returns a representation of a Robots file that can be used with allows? etc"
+  class)
+
+
+(defmethod robots
+  String [txt]
   (parse txt))
+
+
+(defmethod robots
+  InputStream [st]
+  (parse (string-from st)))
+  

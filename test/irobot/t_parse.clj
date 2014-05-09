@@ -3,7 +3,11 @@
   (:require [irobot.parse :refer [parser rules-for-ua]]))
 
 
-
+;; TODO
+;; Case insensitive "User-agent" and its value
+;; URL decode URLs prior to comparison so that /a%3CD.html = /a%3cd.html
+;; Change so that we don't conflate * and <specific UA> - otherwise you can't exlude UAs, can you?
+;; BUT - /a%2fb.html != /a/b.html (don't decode /)
 
 (fact "single record with no rule line"
       (parser "User-Agent:thingy\n") =>
@@ -11,7 +15,14 @@
        [:record
         [:agent "User-Agent:" "thingy"]]])
 
- 
+
+(fact "User-Agent directive is case insensitive")
+
+(fact "User-agent value is case-insensitive")
+
+(fact "User agent should match on a substring")
+
+
 (fact "a path of / works"
       (parser
 "User-Agent:thingy
