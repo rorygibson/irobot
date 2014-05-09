@@ -8,10 +8,10 @@ Allow: /
 
 User-Agent: MyBot
 Allow: /
-Disallow: /
+Disallow: /private
 
 User-Agent: OtherA
-Disallow: /
+Disallow: /semi-private
 
 User-Agent: OtherB
 Disallow: /")
@@ -26,7 +26,9 @@ Allow: /foobar")
 (def empty-robots (parse ""))
 (def blocks-all-robots (parse "User-Agent: *\nDisallow: /"))
 (def non-root-paths-robots (parse non-root-paths-records))
+
  
+
 (facts "about path matching" 
   
   (fact "Root paths always match"
@@ -49,6 +51,7 @@ Allow: /foobar")
   (fact "If there are multiple Paths and one of them is a prefix of Path, we match"
     (matching-path "/foobar" #{"/bar" "/baz" "/foo"}) => truthy)
 
+  
   (fact "If there are multiple Paths and NONE of them is a prefix of Path, we DON'T match"
     (matching-path "/foobar" #{"/baz" "/bar"}) => falsey)
 
@@ -70,4 +73,4 @@ Allow: /foobar")
 
 
   (fact "collates rules by UA"
-    (rules-for "MyBot" normal-robots) => {:allow #{"/"} :disallow #{ "/"}}))
+    (rules-for "MyBot" normal-robots) => {:allow #{"/"} :disallow #{ "/private"}}))
