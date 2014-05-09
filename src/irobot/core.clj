@@ -22,6 +22,6 @@
       true)))
 
 
-(defn load-from
+(defn robots
   [^String txt]
   (parse txt))

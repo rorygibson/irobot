@@ -1,6 +1,6 @@
 (ns irobot.t-core
   (:use [midje.sweet])
-  (:require [irobot.core :refer [load-from allows?]]))
+  (:require [irobot.core :refer [robots allows?]]))
 
 
 (def normal-records
@@ -18,9 +18,9 @@ User-Agent: OtherB
 Disallow: /")
  
 
-(def normal-robots (load-from normal-records))
-(def empty-robots (load-from ""))
-(def blocks-all-robots (load-from "User-Agent: *\nDisallow: /"))
+(def normal-robots (robots normal-records))
+(def empty-robots (robots ""))
+(def blocks-all-robots (robots "User-Agent: *\nDisallow: /"))
 
 
 
