@@ -20,21 +20,21 @@
   [^String s]
   (parser s))
 
-
+  
 ;; TODO never exits if UA not found
 ;; TODO only handles a single instance of a UA in the file - returns
 ;;   on first find of the UA in the tree
 
-(defn find-record-in-tree
+(defn find-record-in-tree 
   "Given an AST, find the parent node of the node with the given name AND value"
-  [t name val]
+  [t name val] 
   (loop [loc (zip/seq-zip t)]
     (let [cur-name (zip/node loc)
           cur-val (zip/node (zip/next loc))]
       (if (and (= name cur-name) (= val cur-val))
         (zip/node (zip/up (zip/up loc)))
         (if (not (zip/end? loc))
-          (recur (zip/next loc))
+          (recur (zip/next loc)) 
           (zip/root loc))))))
 
 

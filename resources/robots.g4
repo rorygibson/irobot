@@ -33,6 +33,7 @@ IdentifierChar
   | '..'
   ;
 
+UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' ;
 
 //
 // Parser rules (start with lowercase letter)
@@ -42,7 +43,7 @@ records : Comment* record* Comment* ;
 
 record : Comment* agent Comment* rule*;
 
-agent : 'User-Agent:' (Identifier | Glob)  Comment*;
+agent : UserAgent (Identifier | Glob)  Comment*;
 
 rule : (allow | disallow | extension) Comment* ;
 

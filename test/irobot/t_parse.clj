@@ -16,9 +16,14 @@
         [:agent "User-Agent:" "thingy"]]])
 
 
-(fact "User-Agent directive is case insensitive")
-
 (fact "User-agent value is case-insensitive")
+ 
+(fact "User-Agent directive is lexed case insensitively"
+  (parser "UsEr-aGent:thingy\n") =>
+  [:records
+   [:record
+    [:agent "UsEr-aGent:" "thingy"]]])
+
 
 (fact "User agent should match on a substring")
 
