@@ -1,5 +1,9 @@
 grammar robots;
 
+//
+// Lexer rules (start with uppercase letter)
+//
+
 Comment
   :  '#' ~( '\r' | '\n' )*
   ;
@@ -29,6 +33,10 @@ IdentifierChar
   | '..'
   ;
 
+
+//
+// Parser rules (start with lowercase letter)
+//
 
 records : Comment* record* Comment* ;
 
