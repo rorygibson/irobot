@@ -1,20 +1,19 @@
 (ns irobot.t-parse
   (:use [midje.sweet])
-  (:require [irobot.parse :refer [create-robots-grammar]]))
+  (:require [irobot.parse :refer [parser rules-for-ua]]))
 
 
-(def r (create-robots-grammar))
 
 
 (fact "single record with no rule line"
-      (r "User-Agent:thingy\n") =>
+      (parser "User-Agent:thingy\n") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]]])
 
  
 (fact "a path of / works"
-      (r
+      (parser
 "User-Agent:thingy
 Allow:/") =>
       [:records
@@ -24,7 +23,7 @@ Allow:/") =>
 
 
 (fact "robots with one record, one allow"
-      (r
+      (parser
 "User-Agent:thingy
 Allow: /") =>
       [:records
@@ -34,7 +33,7 @@ Allow: /") =>
  
 
 (fact "paths don't have to start with a slash"
-      (r
+      (parser
 "User-Agent: thingy
 Allow: Foo") =>
       [:records
@@ -45,7 +44,7 @@ Allow: Foo") =>
 
 
 (fact "end-of-line comments are allowed"
-       (r
+       (parser
 "User-Agent: thingy # some comment
 Allow: /foo") =>
       [:records
@@ -55,7 +54,7 @@ Allow: /foo") =>
 
 
 (fact "comments are allowed before the records"
-      (r
+      (parser
 "# first line
 # second comment line
 User-Agent: thingy
@@ -68,7 +67,7 @@ Allow: /bar") =>
 
 
 (fact "comments are allowed after the records (but they'll get gobbled greedily)"
-      (r
+      (parser
 "User-Agent: thingy
 Allow: /baz
 # first line
@@ -80,7 +79,7 @@ Allow: /baz
 
 
 (fact "comments are allowed within the records (but they'll get gobbled greedily)"
-      (r
+      (parser
 "User-Agent: thingy
 # first line
 Allow: /~rory") =>
@@ -91,7 +90,7 @@ Allow: /~rory") =>
 
 
 (fact "robots with one record, one disallow"
-      (r "User-Agent:thingy\nDisallow:/~rory") =>
+      (parser "User-Agent:thingy\nDisallow:/~rory") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
@@ -99,7 +98,7 @@ Allow: /~rory") =>
  
 
 (fact "arbitrary extensions can be specified"
-      (r "User-Agent:thingy\nDisallow:/\nSOMETHING: foobar") =>
+      (parser "User-Agent:thingy\nDisallow:/\nSOMETHING: foobar") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
@@ -108,7 +107,7 @@ Allow: /~rory") =>
  
 
 (fact "can have more than one record"
-      (r
+      (parser
 "User-Agent: foo
 Allow: /
 User-Agent: bar
@@ -123,7 +122,7 @@ Disallow: /") =>
  
 
 (fact "multiple records, with multiple allows & disallows"
-      (r
+      (parser
 "User-Agent: foo
 Allow: /
 User-Agent: bar 
@@ -138,5 +137,14 @@ Allow: /") =>
         [:rule [:disallow "Disallow" ":" "/"]]
         [:rule [:allow "Allow" ":" "/"]]]]) 
 
- 
+
+(def combined-robots
+  "User-Agent: *
+  Allow: /
+
+  User-Agent: MyBot
+  Disallow: /private")
+
+(fact "rules for a UA include exact match and those for *"
+  (rules-for-ua "MyBot" (parser combined-robots)) => {:allow #{"/"} :disallow #{ "/private"}}) 
  
