@@ -9,19 +9,25 @@ Allow: /
 User-Agent: MyBot
 Allow: /
 Disallow: /
-Disallow: /
 
 User-Agent: OtherA
 Disallow: /
 
 User-Agent: OtherB
-Disallow: /") 
+Disallow: /")
+
+
+(def non-root-paths-records
+  "User-Agent: MyBot
+Disallow: /
+Allow: /foobar") 
 
 (def normal-robots (parse normal-records))
 (def empty-robots (parse ""))
 (def blocks-all-robots (parse "User-Agent: *\nDisallow: /"))
-
-(facts "about path matching"
+(def non-root-paths-robots (parse non-root-paths-records))
+ 
+(facts "about path matching" 
   
   (fact "Root paths always match"
     (matching-path "/" #{"/"}) => truthy)

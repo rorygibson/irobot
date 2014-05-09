@@ -4,11 +4,9 @@ Comment
   :  '#' ~( '\r' | '\n' )*
   ;
 
-Identifier : ([a-z] | [A-Z])+ ;
+Identifier : IdentifierChar+ ;
 
 Glob: '*' ;
-
-Path : ('*' | '/')+ ;
 
 Hash : '#';
 
@@ -18,6 +16,20 @@ WS : ( ' '
   | '\r'
   ) -> channel(HIDDEN) ;
 
+fragment
+IdentifierChar
+  : [0-9a-zA-Z]
+  | '/'
+  | '~'
+  | '-' 
+  | '_'
+  | '&'
+  | '?'
+  | '.'
+  | '..'
+  ;
+
+
 records : Comment* record* Comment* ;
 
 record : Comment* agent Comment* rule*;
@@ -26,9 +38,9 @@ agent : 'User-Agent:' (Identifier | Glob)  Comment*;
 
 rule : (allow | disallow | extension) Comment* ;
 
-disallow : 'Disallow' ':' Path Comment*;
+disallow : 'Disallow' ':' Identifier Comment*;
 
-allow : 'Allow' ':' Path Comment*;
+allow : 'Allow' ':' Identifier Comment*;
 
 extension : Identifier ':' Identifier Comment*;
 
