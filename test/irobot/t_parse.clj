@@ -21,9 +21,7 @@
 
 
 ;; TODO
-;; Case insensitive "User-agent" and its value
 ;; URL decode URLs prior to comparison so that /a%3CD.html = /a%3cd.html
-;; Change so that we don't conflate * and <specific UA> - otherwise you can't exlude UAs, can you?
 ;; BUT - /a%2fb.html != /a/b.html (don't decode /)
 
 (fact "single record with no rule line"

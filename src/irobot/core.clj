@@ -26,7 +26,6 @@
         longest-matching-allow (count-longest (matching-paths path allows))
         longest-matching-disallow (count-longest (matching-paths path disallows))
         complex-pass (>= longest-matching-allow longest-matching-disallow)]
-
     
     (println "Record" rec) 
     (println "Disallows:" disallows)
@@ -51,7 +50,6 @@
       (do
         (println "Couldn't find record for UA" ua)
       (allowed-path? (find-record-by-ua robots "*") path)))))
-
 
 
 (defmulti robots

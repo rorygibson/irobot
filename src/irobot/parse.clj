@@ -5,14 +5,6 @@
 
 
 
-;; TODO not exact match, substring
-;; TODO never exits if UA not found
-;; TODO only handles a single instance of a UA in the file - returns
-;;   on first find of the UA in the tree
-
-
-
-
 (def robots-grammar-filename "resources/robots.g4")
 
 
@@ -29,8 +21,6 @@
   [s]
   (-> s (.toString)
       (.toLowerCase)))
-
-
 
 
 (defn find-nodes-in-tree
@@ -65,19 +55,19 @@
        node )))
 
 
-     (defn find-record-by-ua
-       [t ua]
-       (find-nodes-in-tree t "User-agent:" ua))
+(defn find-record-by-ua
+  [t ua]
+  (find-nodes-in-tree t "User-agent:" ua))
 
 
 
-     (defn find-allows-in-record
-       [rec]
-       (find-nodes-in-tree rec :allow))
+(defn find-allows-in-record
+  [rec]
+  (find-nodes-in-tree rec :allow))
 
-     
-     (defn find-disallows-in-record
-       [rec]
-       (find-nodes-in-tree rec :disallow))
-     
+
+(defn find-disallows-in-record
+  [rec]
+  (find-nodes-in-tree rec :disallow))
+
 

@@ -3,7 +3,6 @@
   (:require [irobot.paths :refer [matching-path]]))
 
 
-
 (fact "Root paths always match"
   (matching-path "/" #{"/"}) => truthy)
 

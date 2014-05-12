@@ -12,6 +12,7 @@
 
 
 (defn matching-paths
+  "Return the subset of paths matching (having a shared prefix with) path"
   [path paths]
   (let [filters [ #(= path (.toString %)) #(.startsWith path (.toString %))]
         filtered (filter (apply some-fn filters) paths)]
@@ -20,5 +21,6 @@
 
 
 (defn count-longest
+  "Return the length of the longest x in xs"
   [xs]
   (count (first (sort #(> (count %1) (count %2)) xs))))
