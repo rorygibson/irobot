@@ -18,6 +18,7 @@ WS : ( ' '
   | '\t'
   | '\n'
   | '\r'
+  | ':'
   ) -> channel(HIDDEN) ;
 
 fragment
@@ -41,17 +42,15 @@ UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' ;
 
 records : Comment* record* Comment* ;
 
-record : Comment* agent Comment* rule*;
+record : Comment* agent Comment* (allow | disallow | extension)* Comment*;
 
 agent : UserAgent (Identifier | Glob)  Comment*;
 
-rule : (allow | disallow | extension) Comment* ;
+disallow : 'Disallow' Identifier Comment*;
 
-disallow : 'Disallow' ':' Identifier Comment*;
+allow : 'Allow' Identifier Comment*;
 
-allow : 'Allow' ':' Identifier Comment*;
-
-extension : Identifier ':' Identifier Comment*;
+extension : Identifier Identifier Comment*;
 
 
 
