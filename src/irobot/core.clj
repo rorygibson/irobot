@@ -6,7 +6,6 @@
   (:import [java.io InputStream]))
 
 
-
 (defn allowed-path?
   "Determines if a path is allowed by the rules in a specific Robots.txt record"
   [rec path]
@@ -43,7 +42,7 @@
 (defmulti robots
   "Load and parse a robots.txt. Returns a representation of a Robots file that can be used with allows?"
   class)
- 
+
 
 (defmethod robots
   String [txt]
@@ -53,4 +52,4 @@
 (defmethod robots
   InputStream [st]
   (parse (string-from st)))
-  
+

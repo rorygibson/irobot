@@ -4,7 +4,7 @@
 
 (defn matching-path
   "Given a single Path and a set of Paths, return any elements in Paths which startWith Path"
-  [path paths]
+  [^String path paths]
   (let [filters [ #(= path (.toString %)) #(.startsWith path (.toString %))]
         filtered (filter (apply some-fn filters) paths)
         res (not (empty? filtered))]
@@ -14,7 +14,7 @@
 
 (defn matching-paths
   "Return the subset of paths matching (having a shared prefix with) path"
-  [path paths]
+  [^String path paths]
   (let [filters [ #(= path (.toString %)) #(.startsWith path (.toString %))]
         filtered (filter (apply some-fn filters) paths)]
     (trace "Matching" path "against" paths "-->" filtered)
