@@ -1,6 +1,7 @@
 (ns irobot.parse
   (:require [clj-antlr.core :as antlr]
             [clojure.set]
+            [clojure.tools.logging :refer [trace debug info warn error fatal]]
             [clojure.zip :as zip]))
 
 

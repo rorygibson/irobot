@@ -1,4 +1,5 @@
-(ns irobot.paths)
+(ns irobot.paths
+  (:require [clojure.tools.logging :refer [trace trace info warn error fatal]]))
 
 
 (defn matching-path
@@ -7,7 +8,7 @@
   (let [filters [ #(= path (.toString %)) #(.startsWith path (.toString %))]
         filtered (filter (apply some-fn filters) paths)
         res (not (empty? filtered))]
-    (println "Matching" path "against" paths "-->" filtered "-->" res)
+    (trace "Matching" path "against" paths "-->" filtered "-->" res)
     res))  
 
 
@@ -16,7 +17,7 @@
   [path paths]
   (let [filters [ #(= path (.toString %)) #(.startsWith path (.toString %))]
         filtered (filter (apply some-fn filters) paths)]
-    (println "Matching" path "against" paths "-->" filtered)
+    (trace "Matching" path "against" paths "-->" filtered)
     filtered))  
 
 

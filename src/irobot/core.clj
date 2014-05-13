@@ -1,5 +1,6 @@
 (ns irobot.core
-  (:require [irobot.parse :refer :all]
+  (:require [clojure.tools.logging :refer [trace debug info warn error fatal]]
+            [irobot.parse :refer :all]
             [irobot.paths :refer [matching-path matching-paths count-longest]]
             [irobot.io :refer [string-from]])
   (:import [java.io InputStream]))
@@ -13,8 +14,6 @@
    If Disallow matches the start of Path and there is no longer Allow matching the start of the path, DISALLOW
    Else ALLOW"
   [rec path]
-  (println "*********************")
-  (println "allowed-path?" rec "Path" path)
 
   (let [allows (find-allows-in-record rec)
         disallows (find-disallows-in-record rec)
@@ -27,29 +26,21 @@
         longest-matching-disallow (count-longest (matching-paths path disallows))
         complex-pass (>= longest-matching-allow longest-matching-disallow)]
     
-    (println "Record" rec) 
-    (println "Disallows:" disallows)
-
-    (println "Allows:" allows)
-    (println "Path to test" path)
-    (println "Simple pass:" simple-pass)
-    (println "Longest disallow:" longest-matching-disallow)
-    (println "Longest allow:" longest-matching-allow)
-    (println "Complex pass:" complex-pass)
+    (trace "Disallows:" disallows "Allows" allows)
     (or simple-pass complex-pass)))
 
 
 (defn allows?
   [robots ua path]
-  (println "Searching for record for UA" ua)
+  (trace "Searching for record for UA" ua)
   (let [rec (find-record-by-ua robots ua)]
     (if (not (empty? rec)) 
       (do
-        (println "Found record for UA" ua "-->" rec)
+        (trace "Found record for UA" ua "-->" rec)
         (allowed-path? rec path))
       (do
-        (println "Couldn't find record for UA" ua)
-      (allowed-path? (find-record-by-ua robots "*") path)))))
+        (trace "Couldn't find record for UA" ua)
+        (allowed-path? (find-record-by-ua robots "*") path)))))
 
 
 (defmulti robots
