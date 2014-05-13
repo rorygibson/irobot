@@ -8,11 +8,7 @@
 
 
 (defn allowed-path?
-  "Work out if a path is allowed.
-
-   If Disallow is / and there is no Allow matching the first part of Path, DISALLOW
-   If Disallow matches the start of Path and there is no longer Allow matching the start of the path, DISALLOW
-   Else ALLOW"
+  "Determines if a path is allowed by the rules in a specific Robots.txt record"
   [rec path]
 
   (let [allows (find-allows-in-record rec)
@@ -31,6 +27,7 @@
 
 
 (defn allows?
+  "Determine whether, according to a robots.txt, a specific User Agent is allowed to access a specific path"
   [robots ua path]
   (trace "Searching for record for UA" ua)
   (let [rec (find-record-by-ua robots ua)]
@@ -44,7 +41,7 @@
 
 
 (defmulti robots
-  "Load and parse a robots.txt. Returns a representation of a Robots file that can be used with allows? etc"
+  "Load and parse a robots.txt. Returns a representation of a Robots file that can be used with allows?"
   class)
  
 
