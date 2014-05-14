@@ -39,7 +39,7 @@
   (find-record-by-ua (parse mixed-case) "mixedcasebot") =>
   [:record
    [:agent "User-Agent:" "MIXEDcaseBOT"]
-   [:disallow "Disallow" "/private"]])
+   [:disallow "Disallow:" "/private"]])
 
 
 (fact "User-Agent directive is lexed case insensitively"
@@ -56,7 +56,7 @@ Allow:/") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/"]]])
+        [:allow "Allow:" "/"]]])
 
 
 (fact "robots with one record, one allow"
@@ -66,7 +66,7 @@ Allow: /") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/"]]])
+        [:allow "Allow:" "/"]]])
  
 
 (fact "paths don't have to start with a slash"
@@ -76,7 +76,7 @@ Allow: Foo") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "Foo"]]])
+        [:allow "Allow:" "Foo"]]])
 
 
 (fact "end-of-line comments are allowed (but skipped)"
@@ -86,7 +86,7 @@ Allow: /foo") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/foo"]]])
+        [:allow "Allow:" "/foo"]]])
 
 
 (fact "comments are allowed before the records, but are skipped"
@@ -98,7 +98,7 @@ Allow: /bar") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/bar"]]]) 
+        [:allow "Allow:" "/bar"]]]) 
 
 
 (fact "comments are allowed after the records (but they'll get skipped)"
@@ -110,7 +110,7 @@ Allow: /baz
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/baz"]]]) 
+        [:allow "Allow:" "/baz"]]]) 
 
 
 (fact "comments are allowed within the records (but they'll get skipped)"
@@ -121,7 +121,7 @@ Allow: /~rory") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/~rory"]]]) 
+        [:allow "Allow:" "/~rory"]]]) 
 
 
 (fact "robots with one record, one disallow"
@@ -129,7 +129,7 @@ Allow: /~rory") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:disallow "Disallow" "/~rory"]]])
+        [:disallow "Disallow:" "/~rory"]]])
  
 
 (fact "arbitrary extensions can be specified"
@@ -137,7 +137,7 @@ Allow: /~rory") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:disallow "Disallow" "/"]
+        [:disallow "Disallow:" "/"]
         [:extension "SOMETHING" "foobar"]]])
  
 
@@ -150,10 +150,10 @@ Disallow: /") =>
       [:records
        [:record
         [:agent "User-Agent:" "foo"]
-        [:allow "Allow" "/"]] 
+        [:allow "Allow:" "/"]] 
        [:record
         [:agent "User-Agent:" "bar"]
-        [:disallow "Disallow" "/"]] ])
+        [:disallow "Disallow:" "/"]] ])
  
 
 (fact "multiple records, with multiple allows & disallows"
@@ -166,11 +166,11 @@ Allow: /") =>
       [:records
        [:record
         [:agent "User-Agent:" "foo"]
-        [:allow "Allow" "/"]]
+        [:allow "Allow:" "/"]]
        [:record
         [:agent "User-Agent:" "bar"]
-        [:disallow "Disallow" "/"]
-        [:allow "Allow" "/"]]])  
+        [:disallow "Disallow:" "/"]
+        [:allow "Allow:" "/"]]])  
 
 
 (fact "Paths may contain the ? and = symbols"
@@ -178,7 +178,7 @@ Allow: /") =>
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:allow "Allow" "/a/b/c?d=e"]]])
+       [:allow "Allow:" "/a/b/c?d=e"]]])
 
 
 (fact "Records may contain a Sitemap directive"
@@ -186,8 +186,8 @@ Allow: /") =>
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:allow "Allow" "/a/b/c"]
-       [:sitemap "Sitemap" "foobar.xml"]]])
+       [:allow "Allow:" "/a/b/c"]
+       [:sitemap "Sitemap:" "foobar.xml"]]])
 
 
 (fact "Sitemap directives may be mixed amongst other directives"
@@ -195,8 +195,8 @@ Allow: /") =>
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:sitemap "Sitemap" "barbar.xml"]
-       [:allow "Allow" "/a/b/c"]]])
+       [:sitemap "Sitemap:" "barbar.xml"]
+       [:allow "Allow:" "/a/b/c"]]])
 
 
 (fact "Allows may include globs"
@@ -204,7 +204,7 @@ Allow: /") =>
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:allow "Allow" "/a/*/c"]]])
+       [:allow "Allow:" "/a/*/c"]]])
  
 
 (fact "Disallows may include globs"
@@ -212,13 +212,13 @@ Allow: /") =>
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:disallow "Disallow" "/a/*/c"]]])
+       [:disallow "Disallow:" "/a/*/c"]]])
 
 
 ;; (fact "Sitemap directives may include absolute URLs (including : characters)"
-;;   (parse "User-agent:foo\nSitemap:http://bar.xml\nAllow:/")
+;;   (parse "User-agent:foo\nAllow:/\nSitemap:http//bar.com/foo.xml")
 ;;   =>  [:records
 ;;       [:record
 ;;        [:agent "User-agent:" "foo"]
-;;        [:sitemap "Sitemap" "http://bar.xml"]
-;;        [:allow "Allow" "/"]]])
+;;        [:allow "Allow:" "/"]
+;;        [:sitemap "Sitemap:" "http//bar.com/foo.xml"]]])

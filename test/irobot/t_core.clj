@@ -45,7 +45,7 @@ Disallow: /")
 
 
 (fact "If there's no matching or * record, we allow"
-  (allows? (robots "User-Agent:other\nAllows:/") "Me" "/something") => true)
+  (allows? (robots "User-Agent:other\nAllow:/") "Me" "/something") => true)
 
 
 (fact "allows UA when we have an allow / and a disallow /"
@@ -59,9 +59,11 @@ Disallow: /")
 (fact "uses the * record when there's no match on UA"
   (allows? normal-robots "UseTheStarBot" "/allowed-by-star") => true)
 
+
 (fact "uses the * record when there's no match on UA" 
   (allows? normal-robots "UseTheStarBot" "/private/disallowed-by-star") => false)
 
+
 (fact "User agent should match on a substring"
-  (allows? (robots "User-agent:LongBotName\n:Allows:/\nDisallows:/hidden") "LongB" "/hidden")
+  (allows? (robots "User-agent:LongBotName\n:Allow:/\nDisallow:/hidden") "LongB" "/hidden")
   => true)

@@ -17,10 +17,9 @@ WS : ( ' '
   | '\t'
   | '\n'
   | '\r'
-  | ':'
-  ) -> skip ;
+  ) -> channel(HIDDEN) ;
 
-fragment SEP : ':';
+SEP : ':' -> skip;
 
 fragment
 IdentifierChar
@@ -37,7 +36,25 @@ IdentifierChar
   | '='
   ;
 
-UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] SEP ;
+UserAgent : 
+  [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] 
+  SEP 
+  ;
+
+Disallow 
+  : 'Disallow' 
+  SEP 
+  ;
+
+Allow 
+  : 'Allow' 
+  SEP 
+  ;
+
+Sitemap 
+  : 'Sitemap' 
+  SEP 
+  ;
 
 //
 // Parser rules (start with lowercase letter)
@@ -49,11 +66,11 @@ record : agent (Comment | allow | disallow | sitemap | extension)* ;
 
 agent : UserAgent Identifier Comment*;
 
-disallow : 'Disallow' Identifier Comment*;
+disallow : Disallow Identifier Comment*;
 
-allow : 'Allow' Identifier Comment*;
+allow : Allow Identifier Comment*;
 
-sitemap : 'Sitemap' Identifier Comment*;
+sitemap : Sitemap Identifier Comment*;
 
 extension : Identifier Identifier Comment*;
 
