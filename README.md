@@ -36,7 +36,6 @@ Then, in a REPL
 ## Must-do TODOs:
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
 + Empty directives (key but no value)
-+ Extra directives mixed up with allows & disallows (not always following them, see www.johnlewis.com/robots.txt)
 
 ## Nice-to-have TODOs:
 + Explicit support for directives other than allow/disallow (crawl-delay)
