@@ -9,21 +9,17 @@ Comment
   -> skip
   ;
 
-Identifier : IdentifierChar+ ;
-
-Hash : '#';
-
 WS : ( ' '
   | '\t'
   | '\n'
   | '\r'
   ) -> channel(HIDDEN) ;
 
-SEP : ':' -> skip;
+ID : (ValidChar)+ ;
 
 fragment
-IdentifierChar
-  : [0-9a-zA-Z]
+ValidChar
+  : ( [0-9a-zA-Z]
   | '/'
   | '~'
   | '-' 
@@ -34,26 +30,11 @@ IdentifierChar
   | '*'
   | '..'
   | '='
+  )+  
   ;
 
 UserAgent : 
-  [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] 
-  SEP 
-  ;
-
-Disallow 
-  : 'Disallow' 
-  SEP 
-  ;
-
-Allow 
-  : 'Allow' 
-  SEP 
-  ;
-
-Sitemap 
-  : 'Sitemap' 
-  SEP 
+  [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' 
   ;
 
 //
@@ -64,15 +45,14 @@ records : (record | Comment)* ;
 
 record : agent (Comment | allow | disallow | sitemap | extension)* ;
 
-agent : UserAgent Identifier Comment*;
+agent : UserAgent ID Comment*;
 
-disallow : Disallow Identifier Comment*;
+disallow : 'Disallow:' ID Comment*;
 
-allow : Allow Identifier Comment*;
+allow : 'Allow:' ID Comment*;
 
-sitemap : Sitemap Identifier Comment*;
+sitemap : 'Sitemap:' ID Comment*;
 
-extension : Identifier Identifier Comment*;
-
+extension : ID ':' ID Comment*;
 
 

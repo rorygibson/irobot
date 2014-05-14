@@ -65,5 +65,5 @@ Disallow: /")
 
 
 (fact "User agent should match on a substring"
-  (allows? (robots "User-agent:LongBotName\n:Allow:/\nDisallow:/hidden") "LongB" "/hidden")
+  (allows? (robots "User-agent:LongBotName\nAllow:/\nDisallow:/hidden") "LongB" "/hidden")
   => true)
