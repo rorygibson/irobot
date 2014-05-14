@@ -6,11 +6,11 @@
             [irobot.io :refer [stringify]]))
 
 
-(def ^{:doc "Location of the ANTLR grammar for robots.txt files"}
+(def ^{:private true :doc "Location of the ANTLR grammar for robots.txt files"}
   ^String robots-grammar-filename "robots.g4")
 
 
-(def ^{:doc "ANTLR parser generated from the grammar file"}
+(def ^{:private true :doc "ANTLR parser generated from the grammar file"}
   parser (antlr/parser (slurp (clojure.java.io/resource robots-grammar-filename))))
 
 
@@ -20,7 +20,7 @@
   (parser s))
 
 
-(defn find-nodes-in-tree
+(defn- find-nodes-in-tree
   "Given a tree of lists, return all nodes whose name is case-insensitively equal to the node text.
 Or, given a name and value, return THE FIRST nodes whose name is case-insensitively equal to the node text, and whose value is case-insensitively equal to the value of the next sibling node"
   ([t ^String name]

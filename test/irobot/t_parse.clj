@@ -25,7 +25,7 @@
 ;; BUT - /a%2fb.html != /a/b.html (don't decode /)
 
 (fact "single record with no rule line"
-      (parser "User-Agent:thingy\n") =>
+      (parse "User-Agent:thingy\n") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]]])
@@ -43,7 +43,7 @@
 
 
 (fact "User-Agent directive is lexed case insensitively"
-  (parser "UsEr-aGent:thingy\n") =>
+  (parse "UsEr-aGent:thingy\n") =>
   [:records
    [:record
     [:agent "UsEr-aGent:" "thingy"]]])
@@ -54,7 +54,7 @@
 
 
 (fact "a path of / works"
-      (parser
+      (parse
 "User-Agent:thingy
 Allow:/") =>
       [:records
@@ -64,7 +64,7 @@ Allow:/") =>
 
 
 (fact "robots with one record, one allow"
-      (parser
+      (parse
 "User-Agent:thingy
 Allow: /") =>
       [:records
@@ -74,7 +74,7 @@ Allow: /") =>
  
 
 (fact "paths don't have to start with a slash"
-      (parser
+      (parse
 "User-Agent: thingy
 Allow: Foo") =>
       [:records
@@ -85,7 +85,7 @@ Allow: Foo") =>
 
 
 (fact "end-of-line comments are allowed"
-       (parser
+       (parse
 "User-Agent: thingy # some comment
 Allow: /foo") =>
       [:records
@@ -95,7 +95,7 @@ Allow: /foo") =>
 
 
 (fact "comments are allowed before the records"
-      (parser
+      (parse
 "# first line
 # second comment line
 User-Agent: thingy
@@ -108,7 +108,7 @@ Allow: /bar") =>
 
 
 (fact "comments are allowed after the records (but they'll get gobbled greedily)"
-      (parser
+      (parse
 "User-Agent: thingy
 Allow: /baz
 # first line
@@ -120,7 +120,7 @@ Allow: /baz
 
 
 (fact "comments are allowed within the records (but they'll get gobbled greedily)"
-      (parser
+      (parse
 "User-Agent: thingy
 # first line
 Allow: /~rory") =>
@@ -131,7 +131,7 @@ Allow: /~rory") =>
 
 
 (fact "robots with one record, one disallow"
-      (parser "User-Agent:thingy\nDisallow:/~rory") =>
+      (parse "User-Agent:thingy\nDisallow:/~rory") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
@@ -139,7 +139,7 @@ Allow: /~rory") =>
  
 
 (fact "arbitrary extensions can be specified"
-      (parser "User-Agent:thingy\nDisallow:/\nSOMETHING: foobar") =>
+      (parse "User-Agent:thingy\nDisallow:/\nSOMETHING: foobar") =>
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
@@ -148,7 +148,7 @@ Allow: /~rory") =>
  
 
 (fact "can have more than one record"
-      (parser
+      (parse
 "User-Agent: foo
 Allow: /
 User-Agent: bar
@@ -163,7 +163,7 @@ Disallow: /") =>
  
 
 (fact "multiple records, with multiple allows & disallows"
-      (parser
+      (parse
 "User-Agent: foo
 Allow: /
 User-Agent: bar 

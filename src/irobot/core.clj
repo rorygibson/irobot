@@ -6,7 +6,7 @@
   (:import [java.io InputStream]))
 
 
-(defn allowed-path?
+(defn- allowed-path?
   "Determines if a path is allowed by the rules in a specific Robots.txt record"
   [rec path]
 
