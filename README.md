@@ -34,7 +34,6 @@ Then, in a REPL
 ```
 
 ## Must-do TODOs:
-+ Paths with = and ? in them
 + Standalone Sitemap directive (see techcrunch's robots for an example)
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
 + Empty directives (key but no value)
