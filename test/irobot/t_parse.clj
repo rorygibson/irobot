@@ -4,6 +4,10 @@
 
 
 
+;; TODO
+;; URL decode URLs prior to comparison so that /a%3CD.html = /a%3cd.html
+;; BUT - /a%2fb.html != /a/b.html (don't decode /)
+
 
 
 (def mixed-case
@@ -19,10 +23,6 @@
   User-Agent: MyBot
   Disallow: /foobar")
 
-
-;; TODO
-;; URL decode URLs prior to comparison so that /a%3CD.html = /a%3cd.html
-;; BUT - /a%2fb.html != /a/b.html (don't decode /)
 
 (fact "single record with no rule line"
       (parse "User-Agent:thingy\n") =>
@@ -47,10 +47,6 @@
   [:records
    [:record
     [:agent "UsEr-aGent:" "thingy"]]])
-
-
-;; TODO fill in
-(fact "User agent should match on a substring")
 
 
 (fact "a path of / works"

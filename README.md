@@ -43,6 +43,7 @@ Must-do TODO:
 Nice-to-have TODOs:
 + Explicit support for directives other than allow/disallow (crawl-delay)
 + Handle sitemaps
++ Normalisation of URL encoded allow/disallow URLs prior to comparison so that eg  /a%3CD.html = /a%3cd.html (BUT /a%2fb.html != /a/b.html - don't decode /)
 
 ## License
 

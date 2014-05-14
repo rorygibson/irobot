@@ -35,12 +35,6 @@ Disallow: /")
 (fact "disallowing / for all UA prevents accessing any path"
   (allows? blocks-all-robots "MyBot 2.3" "/some/path") => false)
 
-
-;; TODO 
-(facts "about loading robots.txt data"
-  (fact "can load from a string"
-    true = truthy))
-
   
 (fact "empty robots file allows crawling by any UA on any path"
   (allows? empty-robots "NaughtyBot 1.0" "/random/path") => true)
@@ -50,8 +44,8 @@ Disallow: /")
   (allows? normal-robots "MyBot" "/") => true)
 
 
-;; TODO fill in
-(fact "If there's no matching or * record, we allow")
+(fact "If there's no matching or * record, we allow"
+  (allows? (robots "User-Agent:other\nAllows:/") "Me" "/something") => true)
 
 
 (fact "allows UA when we have an allow / and a disallow /"
@@ -67,3 +61,7 @@ Disallow: /")
 
 (fact "uses the * record when there's no match on UA" 
   (allows? normal-robots "UseTheStarBot" "/private/disallowed-by-star") => false)
+
+(fact "User agent should match on a substring"
+  (allows? (robots "User-agent:LongBotName\n:Allows:/\nDisallows:/hidden") "LongB" "/hidden")
+  => true)
