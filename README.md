@@ -34,7 +34,6 @@ Then, in a REPL
 ```
 
 ## Must-do TODOs:
-+ URLs with $ signs in them
 + Empty directives (key but no value)
 
 ## Nice-to-have TODOs:
