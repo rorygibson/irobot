@@ -191,11 +191,11 @@ Allow: /") =>
 
 
 (fact "Sitemap directives may be mixed amongst other directives"
-  (parse "User-agent:foo\nSitemap:barbar.xml\nAllow:/a/b/c")
+  (parse "User-agent:foo\nSitemap:/barbar.xml\nAllow:/a/b/c")
   => [:records
       [:record
        [:agent "User-agent:" "foo"]
-       [:sitemap "Sitemap:" "barbar.xml"]
+       [:sitemap "Sitemap:" "/barbar.xml"]
        [:allow "Allow:" "/a/b/c"]]])
 
 
