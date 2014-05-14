@@ -6,11 +6,10 @@ grammar robots;
 
 Comment
   :  '#' ~( '\r' | '\n' )*
+  -> skip
   ;
 
 Identifier : IdentifierChar+ ;
-
-Glob: '*' ;
 
 Hash : '#';
 
@@ -19,7 +18,9 @@ WS : ( ' '
   | '\n'
   | '\r'
   | ':'
-  ) -> channel(HIDDEN) ;
+  ) -> skip ;
+
+fragment SEP : ':';
 
 fragment
 IdentifierChar
@@ -31,25 +32,28 @@ IdentifierChar
   | '&'
   | '?'
   | '.'
+  | '*'
   | '..'
   | '='
   ;
 
-UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' ;
+UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] SEP ;
 
 //
 // Parser rules (start with lowercase letter)
 //
 
-records : Comment* record* Comment* ;
+records : (record | Comment)* ;
 
-record : Comment* agent Comment* (allow | disallow | extension)* Comment*;
+record : agent (Comment | allow | disallow | sitemap | extension)* ;
 
-agent : UserAgent (Identifier | Glob)  Comment*;
+agent : UserAgent Identifier Comment*;
 
 disallow : 'Disallow' Identifier Comment*;
 
 allow : 'Allow' Identifier Comment*;
+
+sitemap : 'Sitemap' Identifier Comment*;
 
 extension : Identifier Identifier Comment*;
 

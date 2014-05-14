@@ -79,31 +79,29 @@ Allow: Foo") =>
         [:allow "Allow" "Foo"]]])
 
 
-
-(fact "end-of-line comments are allowed"
+(fact "end-of-line comments are allowed (but skipped)"
        (parse
 "User-Agent: thingy # some comment
 Allow: /foo") =>
       [:records
        [:record
-        [:agent "User-Agent:" "thingy" "# some comment"]
+        [:agent "User-Agent:" "thingy"]
         [:allow "Allow" "/foo"]]])
 
 
-(fact "comments are allowed before the records"
+(fact "comments are allowed before the records, but are skipped"
       (parse
 "# first line
 # second comment line
 User-Agent: thingy
 Allow: /bar") =>
       [:records
-       "# first line" "# second comment line"
        [:record
         [:agent "User-Agent:" "thingy"]
         [:allow "Allow" "/bar"]]]) 
 
 
-(fact "comments are allowed after the records (but they'll get gobbled greedily)"
+(fact "comments are allowed after the records (but they'll get skipped)"
       (parse
 "User-Agent: thingy
 Allow: /baz
@@ -112,17 +110,17 @@ Allow: /baz
       [:records
        [:record
         [:agent "User-Agent:" "thingy"]
-        [:allow "Allow" "/baz" "# first line" "# second comment line"]]]) 
+        [:allow "Allow" "/baz"]]]) 
 
 
-(fact "comments are allowed within the records (but they'll get gobbled greedily)"
+(fact "comments are allowed within the records (but they'll get skipped)"
       (parse
 "User-Agent: thingy
 # first line
 Allow: /~rory") =>
       [:records
        [:record
-        [:agent "User-Agent:" "thingy" "# first line"]
+        [:agent "User-Agent:" "thingy"]
         [:allow "Allow" "/~rory"]]]) 
 
 
@@ -181,3 +179,46 @@ Allow: /") =>
       [:record
        [:agent "User-agent:" "foo"]
        [:allow "Allow" "/a/b/c?d=e"]]])
+
+
+(fact "Records may contain a Sitemap directive"
+  (parse "User-agent:foo\nAllow:/a/b/c\nSitemap:foobar.xml")
+  => [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:allow "Allow" "/a/b/c"]
+       [:sitemap "Sitemap" "foobar.xml"]]])
+
+
+(fact "Sitemap directives may be mixed amongst other directives"
+  (parse "User-agent:foo\nSitemap:barbar.xml\nAllow:/a/b/c")
+  => [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:sitemap "Sitemap" "barbar.xml"]
+       [:allow "Allow" "/a/b/c"]]])
+
+
+(fact "Allows may include globs"
+    (parse "User-agent:foo\nAllow:/a/*/c")
+  => [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:allow "Allow" "/a/*/c"]]])
+ 
+
+(fact "Disallows may include globs"
+    (parse "User-agent:foo\nDisallow:/a/*/c")
+  => [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:disallow "Disallow" "/a/*/c"]]])
+
+
+;; (fact "Sitemap directives may include absolute URLs (including : characters)"
+;;   (parse "User-agent:foo\nSitemap:http://bar.xml\nAllow:/")
+;;   =>  [:records
+;;       [:record
+;;        [:agent "User-agent:" "foo"]
+;;        [:sitemap "Sitemap" "http://bar.xml"]
+;;        [:allow "Allow" "/"]]])
