@@ -10,8 +10,6 @@
                  [org.clojure/tools.logging "0.2.6"]
                  [clj-antlr "0.2.2"]]
 
-  :main irobot.core
-  
   :profiles {
              :dev {
                    :resource-paths ["test/resources"]

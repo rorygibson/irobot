@@ -7,11 +7,11 @@
 
 
 (def ^{:doc "Location of the ANTLR grammar for robots.txt files"}
-  ^String robots-grammar-filename "resources/robots.g4")
+  ^String robots-grammar-filename "robots.g4")
 
 
 (def ^{:doc "ANTLR parser generated from the grammar file"}
-  parser (antlr/parser robots-grammar-filename))
+  parser (antlr/parser (slurp (clojure.java.io/resource robots-grammar-filename))))
 
 
 (defn parse
