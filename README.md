@@ -33,14 +33,14 @@ Then, in a REPL
 
 ```
 
-Must-do TODO:
+## Must-do TODO:
 + Paths with = and ? in them
 + Standalone Sitemap directive (see techcrunch's robots for an example)
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
 + Empty directives (key but no value)
 + Extra directives mixed up with allows & disallows (not always following them, see www.johnlewis.com/robots.txt)
 
-Nice-to-have TODOs:
+## Nice-to-have TODOs:
 + Explicit support for directives other than allow/disallow (crawl-delay)
 + Handle sitemaps
 + Normalisation of URL encoded allow/disallow URLs prior to comparison so that eg  /a%3CD.html = /a%3cd.html (BUT /a%2fb.html != /a/b.html - don't decode /)
