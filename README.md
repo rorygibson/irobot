@@ -34,12 +34,13 @@ Then, in a REPL
 ```
 
 ## Must-do TODOs:
-+ Wildcard globbing in allow & disallow directives (see github's robots for an example)
++ URLs with $ signs in them
 + Empty directives (key but no value)
 
 ## Nice-to-have TODOs:
-+ Explicit support for directives other than allow/disallow (crawl-delay)
-+ Handle sitemaps
++ Wildcard globbing in allow & disallow directives (see github's robots for an example)
++ Support Host: directive
++ Handle sitemaps (not just pull them out, but do something useful with them - but is this the right library?)
 + Normalisation of URL encoded allow/disallow URLs prior to comparison so that eg  /a%3CD.html = /a%3cd.html (BUT /a%2fb.html != /a/b.html - don't decode /)
 
 ## License

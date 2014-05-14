@@ -1,6 +1,6 @@
 (ns irobot.t-core
   (:use [midje.sweet])
-  (:require [irobot.core :refer [robots allows?]]))
+  (:require [irobot.core :refer [robots allows? crawl-delay]]))
 
 
 (def normal-records
@@ -23,6 +23,13 @@ Disallow: /")
 
 (def allow-and-disallow-records
   "User-Agent:XYZ\n
+Allow: /
+Disallow: /")
+
+
+(def with-cd
+  "User-Agent:XYZ
+Crawl-delay: 10
 Allow: /
 Disallow: /")
 
@@ -67,3 +74,12 @@ Disallow: /")
 (fact "User agent should match on a substring"
   (allows? (robots "User-agent:LongBotName\nAllow:/\nDisallow:/hidden") "LongB" "/hidden")
   => true)
+
+
+(fact "Can retrieve the crawl-delay from a robots.txt"
+  (crawl-delay (robots with-cd) "XYZ") => 10N) 
+
+
+(fact "If there's no explicit crawl-delay it returns nil"
+  (crawl-delay normal-robots "MyBot") => nil)
+ 

@@ -256,3 +256,11 @@ Allow: /") =>
        [:agent "User-Agent:" "foo"]
        [:disallow "DISALLOW:" "/path"]]])
  
+
+(fact "Parses crawl-delay directive"
+  (parse "User-Agent:foo\nCrawl-Delay: 10")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "foo"]
+       [:crawldelay "Crawl-Delay:" "10"]]]) 
+         

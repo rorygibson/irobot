@@ -17,7 +17,8 @@ WS : ( ' '
 
 fragment
 ValidChar
-  : ( [0-9a-zA-Z]
+  : ( [a-z]
+  | [A-Z]
   | '/'
   | '~'
   | '-' 
@@ -27,8 +28,11 @@ ValidChar
   | '.'
   | '*'
   | '..'
-  | '='
-  )+  
+  | '=' )+  
+  ;
+
+Digit
+  : ('0'..'9')
   ;
 
 UserAgent 
@@ -47,9 +51,17 @@ Allow
   : [Aa] [Ll] [Ll] [Oo] [Ww] ':' 
   ;
 
-ID : (ValidChar)+ ;
+ID 
+  : (ValidChar | Digit)+ 
+  ;
 
-URL : 'http://' (ValidChar)* ;
+URL 
+  : 'http://' (ValidChar | Digit)* 
+  ;
+
+CrawlDelay 
+  : [Cc] [Rr] [Aa] [Ww] [Ll] '-' [Dd] [Ee] [Ll] [Aa] [Yy] ':'
+  ;
 
 
 //
@@ -58,7 +70,7 @@ URL : 'http://' (ValidChar)* ;
 
 records : (record | Comment)* ;
 
-record : sitemap | (agent (Comment | allow | disallow | sitemap | extension)*) ;
+record : sitemap | (agent (Comment | allow | disallow | sitemap | crawldelay | extension)*) ;
 
 agent : UserAgent ID Comment*;
 
@@ -67,6 +79,8 @@ disallow : Disallow ID Comment*;
 allow : Allow ID Comment*;
 
 sitemap : Sitemap (URL | ID) Comment*;
+
+crawldelay : CrawlDelay ID Comment*;
 
 extension : ID ':' ID Comment*;
 

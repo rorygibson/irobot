@@ -69,3 +69,10 @@ Or, given a name and value, return THE FIRST nodes whose name is case-insensitiv
   "Find the disallow-rules in a robots.txt record"
   [rec]
   (find-nodes-in-tree rec :disallow))
+
+
+(defn find-crawl-delay-in-record
+  "Find the crawl delay in a robots.txt record"
+  [rec]
+  (let [v (first (find-nodes-in-tree rec :crawldelay))]
+    (if v (read-string v) nil)))
