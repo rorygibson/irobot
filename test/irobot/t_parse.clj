@@ -222,3 +222,13 @@ Allow: /") =>
        [:agent "User-agent:" "foo"]
        [:allow "Allow:" "/"]
        [:sitemap "Sitemap:" "http://bar.com/foo.xml"]]])
+
+
+(fact "Sitemap directives may sit outside of a record"
+  (parse "Sitemap:/sitemap.xml\nUser-agent:MyBot\nAllow:/")
+  => [:records
+      [:record
+       [:sitemap "Sitemap:" "/sitemap.xml"]]
+      [:record
+       [:agent "User-agent:" "MyBot"]
+       [:allow "Allow:" "/"]]])

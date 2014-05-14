@@ -46,7 +46,7 @@ UserAgent :
 
 records : (record | Comment)* ;
 
-record : agent (Comment | allow | disallow | sitemap | extension)* ;
+record : sitemap | (agent (Comment | allow | disallow | sitemap | extension)*) ;
 
 agent : UserAgent ID Comment*;
 
