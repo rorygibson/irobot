@@ -216,9 +216,9 @@ Allow: /") =>
 
 
 (fact "Sitemap directives may include absolute URLs (including : characters)"
-  (parse "User-agent:foo\nAllow:/\nSitemap:http//bar.com/foo.xml")
+  (parse "User-agent:foo\nAllow:/\nSitemap:http://bar.com/foo.xml")
   =>  [:records
       [:record
        [:agent "User-agent:" "foo"]
        [:allow "Allow:" "/"]
-       [:sitemap "Sitemap:" "http//bar.com/foo.xml"]]])
+       [:sitemap "Sitemap:" "http://bar.com/foo.xml"]]])

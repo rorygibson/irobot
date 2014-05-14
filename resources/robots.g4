@@ -17,6 +17,8 @@ WS : ( ' '
 
 ID : (ValidChar)+ ;
 
+URL : 'http://' (ValidChar)* ;
+
 fragment
 ValidChar
   : ( [0-9a-zA-Z]
@@ -37,6 +39,7 @@ UserAgent :
   [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' 
   ;
 
+
 //
 // Parser rules (start with lowercase letter)
 //
@@ -51,7 +54,7 @@ disallow : 'Disallow:' ID Comment*;
 
 allow : 'Allow:' ID Comment*;
 
-sitemap : 'Sitemap:' ID Comment*;
+sitemap : 'Sitemap:' (URL | ID) Comment*;
 
 extension : ID ':' ID Comment*;
 
