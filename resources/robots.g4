@@ -31,14 +31,21 @@ ValidChar
   )+  
   ;
 
-UserAgent : 
-  [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' 
+UserAgent 
+  : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' 
   ;
 
-Sitemap :
-  [Ss] [Ii] [Tt] [Ee] [Mm] [Aa] [Pp] ':'
+Sitemap 
+  : [Ss] [Ii] [Tt] [Ee] [Mm] [Aa] [Pp] ':'
   ;
 
+Disallow 
+  : [Dd] [Ii] [Ss] [Aa] [Ll] [Ll] [Oo] [Ww] ':' 
+  ;
+
+Allow 
+  : [Aa] [Ll] [Ll] [Oo] [Ww] ':' 
+  ;
 
 ID : (ValidChar)+ ;
 
@@ -55,9 +62,9 @@ record : sitemap | (agent (Comment | allow | disallow | sitemap | extension)*) ;
 
 agent : UserAgent ID Comment*;
 
-disallow : 'Disallow:' ID Comment*;
+disallow : Disallow ID Comment*;
 
-allow : 'Allow:' ID Comment*;
+allow : Allow ID Comment*;
 
 sitemap : Sitemap (URL | ID) Comment*;
 

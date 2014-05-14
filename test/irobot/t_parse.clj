@@ -239,3 +239,20 @@ Allow: /") =>
   => [:records
       [:record
        [:sitemap "SiteMAP:" "/sitemap.xml"]]])
+
+
+(fact "Allow directive can be case-insensitive"
+  (parse "User-Agent: foo\nALLOW:/path")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "foo"]
+       [:allow "ALLOW:" "/path"]]])
+
+
+(fact "Disllow directive can be case-insensitive"
+  (parse "User-Agent: foo\nDISALLOW:/path")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "foo"]
+       [:disallow "DISALLOW:" "/path"]]])
+ 
