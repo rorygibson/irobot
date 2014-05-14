@@ -1,7 +1,7 @@
 (defproject irobot "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "A minimal Clojure library for parsing and intepreting robots.txt files"
 
-  :url "http://example.com/FIXME"
+  :url "http://github.com/rorygibson/irobot"
 
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
