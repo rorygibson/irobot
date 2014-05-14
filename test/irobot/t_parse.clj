@@ -138,7 +138,7 @@ Allow: /~rory") =>
        [:record
         [:agent "User-Agent:" "thingy"]
         [:disallow "Disallow:" "/"]
-        [:extension "SOMETHING" "foobar"]]])
+        [:extension "SOMETHING" ":" "foobar"]]])
  
 
 (fact "can have more than one record"
@@ -215,10 +215,10 @@ Allow: /") =>
        [:disallow "Disallow:" "/a/*/c"]]])
 
 
-;; (fact "Sitemap directives may include absolute URLs (including : characters)"
-;;   (parse "User-agent:foo\nAllow:/\nSitemap:http//bar.com/foo.xml")
-;;   =>  [:records
-;;       [:record
-;;        [:agent "User-agent:" "foo"]
-;;        [:allow "Allow:" "/"]
-;;        [:sitemap "Sitemap:" "http//bar.com/foo.xml"]]])
+(fact "Sitemap directives may include absolute URLs (including : characters)"
+  (parse "User-agent:foo\nAllow:/\nSitemap:http//bar.com/foo.xml")
+  =>  [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:allow "Allow:" "/"]
+       [:sitemap "Sitemap:" "http//bar.com/foo.xml"]]])
