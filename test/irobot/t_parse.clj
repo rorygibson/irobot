@@ -232,3 +232,10 @@ Allow: /") =>
       [:record
        [:agent "User-agent:" "MyBot"]
        [:allow "Allow:" "/"]]])
+
+
+(fact "Sitemap directive can be case-insensitive"
+  (parse "SiteMAP: /sitemap.xml")
+  => [:records
+      [:record
+       [:sitemap "SiteMAP:" "/sitemap.xml"]]])
