@@ -82,4 +82,9 @@ Disallow: /")
 
 (fact "If there's no explicit crawl-delay it returns nil"
   (crawl-delay normal-robots "MyBot") => nil)
+
+
+(fact "Crawl-Delay will use the one from the * record if it's not set for the UA"
+  (crawl-delay (robots "User-agent:*\nCrawl-Delay:50\nUser-Agent:Foo\nAllow:/") "MyBot")
+  => 50N)
  

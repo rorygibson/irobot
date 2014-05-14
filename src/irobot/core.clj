@@ -50,7 +50,7 @@
         (find-crawl-delay-in-record rec))
       (do
         (trace "[crawl-delay] record not found")
-        nil))))
+        (find-crawl-delay-in-record (find-record-by-ua robots "*"))))))
 
 
 (defmulti robots
