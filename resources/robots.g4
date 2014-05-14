@@ -32,6 +32,7 @@ IdentifierChar
   | '?'
   | '.'
   | '..'
+  | '='
   ;
 
 UserAgent : [Uu] [Ss] [Ee] [Rr] '-' [Aa] [Gg] [Ee] [Nn] [Tt] ':' ;

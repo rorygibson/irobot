@@ -175,3 +175,9 @@ Allow: /") =>
         [:allow "Allow" "/"]]])  
 
 
+(fact "Paths may contain the ? and = symbols"
+  (parse "User-agent:foo\nAllow:/a/b/c?d=e")
+  => [:records
+      [:record
+       [:agent "User-agent:" "foo"]
+       [:allow "Allow" "/a/b/c?d=e"]]])
