@@ -7,7 +7,7 @@ Not ready for prime-time yet - need to resolve the must-do TODOs below first.
 
 ## Usage
 
-Add the dependency to your '''project.clj'''.
+Add the dependency to your project.clj.
 
 You'll probably also want a dependency on something like [https://github.com/dakrone/clj-http](clj-http) for actually fetching the robots.txt from the target webserver.
 
@@ -33,7 +33,7 @@ Then, in a REPL
 
 ```
 
-## Must-do TODO:
+## Must-do TODOs:
 + Paths with = and ? in them
 + Standalone Sitemap directive (see techcrunch's robots for an example)
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
