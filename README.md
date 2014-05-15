@@ -35,6 +35,7 @@ Then, in a REPL
 
 ## Must-do TODOs:
 + Empty directives (key but no value)
++ Don't slurp the robots.txt, use a BufferedReader in case someone spoofs us a large file
 
 ## Nice-to-have TODOs:
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
