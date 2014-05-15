@@ -4,9 +4,6 @@
 
 
 
-;; TODO
-;; URL decode URLs prior to comparison so that /a%3CD.html = /a%3cd.html
-;; BUT - /a%2fb.html != /a/b.html (don't decode /)
 
 
 
