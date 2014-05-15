@@ -34,11 +34,12 @@ Then, in a REPL
 ```
 
 ## Must-do TODOs:
-... none right now ...
++ Better handling of parsing errors
 
 ## Nice-to-have TODOs:
++ Support ':' in URLs (see www.linkedin.com/robots.txt for an example)
 + Wildcard globbing in allow & disallow directives (see github's robots for an example)
-+ Support Host: directiv
++ Support Host: directive
 + Defined behaviour for empty directives (key but no value)
 + Handle sitemaps (not just pull them out, but do something useful with them - but is this the right library?)
 + Normalisation of URL encoded allow/disallow URLs prior to comparison so that eg  /a%3CD.html = /a%3cd.html (BUT /a%2fb.html != /a/b.html - don't decode /)

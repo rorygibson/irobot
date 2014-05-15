@@ -284,3 +284,27 @@ Allow: /") =>
       [:record
        [:agent "User-Agent:" "Foo"]
        [:allow "Allow:" "/some-url-with-a-%-in-it/"]]])
+
+
+(fact "URLs may contain the @ symbol"
+  (parse "User-Agent:Foo\nAllow:/some-url-with-a-@-in-it/")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "Foo"]
+       [:allow "Allow:" "/some-url-with-a-@-in-it/"]]])
+
+
+(fact "URLs may contain the + symbol"
+  (parse "User-Agent:Foo\nAllow:/some-url-with-a-+-in-it/")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "Foo"]
+       [:allow "Allow:" "/some-url-with-a-+-in-it/"]]])
+
+
+(fact "URLs may contain the ! symbol"
+  (parse "User-Agent:Foo\nAllow:/some-url-with-a-!-in-it/")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "Foo"]
+       [:allow "Allow:" "/some-url-with-a-!-in-it/"]]])
