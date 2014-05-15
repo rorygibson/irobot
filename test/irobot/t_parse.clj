@@ -260,10 +260,19 @@ Allow: /") =>
       [:record
        [:agent "User-Agent:" "foo"]
        [:crawldelay "Crawl-Delay:" "10"]]]) 
-         
+
+
 (fact "URLs may contain the $ sign"
   (parse "User-Agent:Foo\nAllow:/some-url-with-a-$/")
   => [:records
       [:record
        [:agent "User-Agent:" "Foo"]
        [:allow "Allow:" "/some-url-with-a-$/"]]])
+
+
+(fact "URLs may contain the , symbol"
+  (parse "User-Agent:Foo\nAllow:/some-url-with-a-,-in-it/")
+  => [:records
+      [:record
+       [:agent "User-Agent:" "Foo"]
+       [:allow "Allow:" "/some-url-with-a-,-in-it/"]]])

@@ -34,5 +34,5 @@
 
 (fact "Loads all the robots files we know should be working"
   (let [rs (load-all-robots-in fbase)]
-    (count rs) => 9))
+    (count rs) => 10))
 
