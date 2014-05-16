@@ -1,4 +1,5 @@
 ﻿# Robots.txt file for http://www.microsoft.com
+# broken - DOS encoding at fault?
 #
 
 User-agent: *
