@@ -4,9 +4,6 @@
 
 
 
-
-
-
 (def mixed-case
   "User-Agent: MIXEDcaseBOT
    Disallow: /private")
@@ -170,14 +167,6 @@ Allow: /") =>
         [:allow "Allow:" "/"]]])  
 
 
-(fact "Paths may contain the ? and = symbols"
-  (parse "User-agent:foo\nAllow:/a/b/c?d=e")
-  => [:records
-      [:record
-       [:agent "User-agent:" "foo"]
-       [:allow "Allow:" "/a/b/c?d=e"]]])
-
-
 (fact "Records may contain a Sitemap directive"
   (parse "User-agent:foo\nAllow:/a/b/c\nSitemap:foobar.xml")
   => [:records
@@ -194,22 +183,6 @@ Allow: /") =>
        [:agent "User-agent:" "foo"]
        [:sitemap "Sitemap:" "/barbar.xml"]
        [:allow "Allow:" "/a/b/c"]]])
-
-
-(fact "Allows may include globs"
-    (parse "User-agent:foo\nAllow:/a/*/c")
-  => [:records
-      [:record
-       [:agent "User-agent:" "foo"]
-       [:allow "Allow:" "/a/*/c"]]])
- 
-
-(fact "Disallows may include globs"
-    (parse "User-agent:foo\nDisallow:/a/*/c")
-  => [:records
-      [:record
-       [:agent "User-agent:" "foo"]
-       [:disallow "Disallow:" "/a/*/c"]]])
 
 
 (fact "Sitemap directives may include absolute URLs (including : characters)"
@@ -260,99 +233,3 @@ Allow: /") =>
       [:record
        [:agent "User-Agent:" "foo"]
        [:crawldelay "Crawl-Delay:" "10"]]]) 
-
-
-(fact "URLs may contain the $ sign"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-$/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-$/"]]])
-
-
-(fact "URLs may contain the , symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-,-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-,-in-it/"]]])
-
-
-(fact "URLs may contain the % symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-%-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-%-in-it/"]]])
-
-
-(fact "URLs may contain the @ symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-@-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-@-in-it/"]]])
-
-
-(fact "URLs may contain the + symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-+-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-+-in-it/"]]])
-
-
-(fact "URLs may contain the ! symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-!-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-!-in-it/"]]])
-
-
-(fact "URLs may contain the \" symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-\"-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-\"-in-it/"]]])
-
-
-(fact "URLs may contain the ' symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-'-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-'-in-it/"]]])
-
-
-(fact "URLs may contain the ( and ) symbols"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-()-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-()-in-it/"]]])
-
-
-(fact "URLs may contain the | symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-|-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-|-in-it/"]]])
-
-
-(fact "URLs may contain the ; symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-;-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-;-in-it/"]]])
-
-
-(fact "URLs may contain the # symbol"
-  (parse "User-Agent:Foo\nAllow:/some-url-with-a-#-in-it/")
-  => [:records
-      [:record
-       [:agent "User-Agent:" "Foo"]
-       [:allow "Allow:" "/some-url-with-a-#-in-it/"]]])
