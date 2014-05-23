@@ -1,6 +1,6 @@
 (ns irobot.t-core
   (:use [midje.sweet])
-  (:require [irobot.core :refer [robots allows? crawl-delay]]))
+  (:require [irobot.core :refer [robots allows? crawl-delay sitemaps]]))
 
 
 (def normal-records
@@ -87,4 +87,7 @@ Disallow: /")
 (fact "Crawl-Delay will use the one from the * record if it's not set for the UA"
   (crawl-delay (robots "User-agent:*\nCrawl-Delay:50\nUser-Agent:Foo\nAllow:/") "MyBot")
   => 50N)
- 
+
+
+(fact "we can access all the sitemap elements"
+  (count (sitemaps (robots "Sitemap:/sitemap1.xml\nSitemap:/sitemap2.xml"))) => 2)

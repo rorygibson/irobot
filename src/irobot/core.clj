@@ -53,6 +53,15 @@
         (find-crawl-delay-in-record (find-record-by-ua robots "*"))))))
 
 
+(defn sitemaps
+  "Return the set of all sitemap file locations listed in this robots.txt"
+  [robots]
+  (let [sms (find-sitemaps-in-tree robots)]
+    (trace "[sitemaps] returning list of" (count sms) "sitemaps")
+    sms))
+
+
+
 (defmulti robots
   "Load and parse a robots.txt. Returns a representation of a Robots file that can be used with allows?"
   class)

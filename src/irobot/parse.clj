@@ -71,6 +71,12 @@ Or, given a name and value, return THE FIRST nodes whose name is case-insensitiv
   (find-nodes-in-tree rec :disallow))
 
 
+(defn find-sitemaps-in-tree
+  "Find the disallow-rules in a robots.txt record"
+  [t]
+  (find-nodes-in-tree t :sitemap))
+
+
 (defn find-crawl-delay-in-record
   "Find the crawl delay in a robots.txt record"
   [rec]
