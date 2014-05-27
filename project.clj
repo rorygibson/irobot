@@ -1,4 +1,4 @@
-(defproject irobot "0.1.0-SNAPSHOT"
+(defproject irobot "0.1.1-SNAPSHOT"
   :description "A minimal Clojure library for parsing and intepreting robots.txt files"
 
   :url "http://github.com/rorygibson/irobot"

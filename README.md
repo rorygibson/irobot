@@ -12,7 +12,7 @@ Add the dependency to your project.clj.
 You'll probably also want a dependency on something like [https://github.com/dakrone/clj-http](clj-http) for actually fetching the robots.txt from the target webserver.
 
 ```clojure
-[irobot "0.1.0-SNAPSHOT"]
+[irobot "0.1.1-SNAPSHOT"]
 [clj-http "0.9.1"]
 ```
 
