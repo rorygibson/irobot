@@ -13,5 +13,5 @@
   "Return a lowercased version of a string (calls toString on anything that isn't already a String)"
   [s]
   (let [s (if s s "")
-        ^String s (.toString s)]
-    (.toLowerCase s)))
+        ts (.toString s)]
+    (.toLowerCase ts)))
