@@ -12,6 +12,5 @@
 (defn stringify
   "Return a lowercased version of a string (calls toString on anything that isn't already a String)"
   [s]
-  (let [s (if s s "")
-        ts (.toString s)]
-    (.toLowerCase ts)))
+  (let [s (if s s "")]
+    (clojure.string/lower-case s)))

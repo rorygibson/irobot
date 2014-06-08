@@ -6,7 +6,7 @@
   (:import [java.io InputStream]))
 
 
-(defn- allowed-path?
+(defn- allowed-path-real?
   "Determines if a path is allowed by the rules in a specific Robots.txt record"
   [rec path]
 
@@ -24,19 +24,22 @@
     (trace "[allowed-path?] Disallows:" disallows "Allows" allows)
     (or simple-pass complex-pass)))
 
+(def allowed-path? (memoize allowed-path-real?))
+(def find-record-by-ua-memo (memoize find-record-by-ua))
+
 
 (defn allows?
   "Determine whether, according to a robots.txt, a specific User Agent is allowed to access a specific path"
   [robots ua path]
   (trace "[allows?] Searching for record for UA" ua)
-  (let [rec (find-record-by-ua robots ua)]
+  (let [rec (find-record-by-ua-memo robots ua)]
     (if (not (empty? rec)) 
       (do
         (trace "[allows?] Found record for UA" ua "-->" rec)
         (allowed-path? rec path))
       (do
         (trace "[allows?] Couldn't find record for UA" ua)
-        (allowed-path? (find-record-by-ua robots "*") path)))))
+        (allowed-path? (find-record-by-ua-memo robots "*") path)))))
 
 
 (defn crawl-delay
