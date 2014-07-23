@@ -3,7 +3,14 @@
 Parses and handles robots.txt files.
 Does its' best to obey Asimov's Three Laws.
 
-Not ready for prime-time yet - need to resolve the must-do TODOs below first.
+
+## Features
++ Loads robots.txt files from string data
++ Has a simple API for determining if a robots.txt allows acccess for a given user-agent to a specific path in the site
++ Natively understands allow, disallow, crawl-delay and sitemap rules
++ Uses the ANTLR library and a custom grammar to precisely model the robots.txt spec
++ Minimal dependencies
++ Well tested (using Midje)
 
 ## Usage
 
@@ -35,7 +42,6 @@ Then, in a REPL
 
 ## Must-do TODOs:
 + Better handling of parsing errors
-+ Support fetching sitemaps & sitemap-indexes, using mundi library for parsing & link extraction
 
 ## Nice-to-have TODOs:
 + Support ':' in URLs (see www.linkedin.com/robots.txt for an example)
